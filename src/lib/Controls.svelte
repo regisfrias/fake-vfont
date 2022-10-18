@@ -16,18 +16,18 @@
 </script>
 
 <p>
+  Bulge <input type="checkbox" bind:checked={bulge}>
+  <span class="control bulge-control-wrapper">
+    <input class="bulge-control" type="range" min="0" max="1" step="0.001" bind:value={bulgeCenter}>
+  </span>
+</p>
+
+<p>
   Thickness
   <span class="control thickness">
     <span class="label">Thin</span>
     <input class="thickness-control" type="range" name="" id="" min="0" max="1" step="0.001" bind:value={thickness}>
     <span class="label">Bold</span>
-  </span>
-</p>
-
-<p>
-  Bulge <input type="checkbox" checked={bulge}>
-  <span class="control bulge-control-wrapper">
-    <input class="bulge-control" type="range" min="0" max="1" step="0.001" bind:value={bulgeCenter}>
   </span>
 </p>
 

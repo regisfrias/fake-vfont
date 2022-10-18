@@ -13,7 +13,6 @@
 
   <p>A proof of concept for a text with continuous font thickness. This allows two separate font files (thin and a bold) to behave as if they were a single file with continous thickness — similar to OpenType font variations.</p>
 
-  <a href="https://github.com/regisfrias/interpolate-font-file-glyphs">Source code</a>
 </header>
 
 <main>
@@ -28,3 +27,7 @@
 
   <Controls bind:controls={controls} />
 </main>
+
+<footer>
+  <a href="https://github.com/regisfrias/fake-vfont">Source code</a>
+</footer>
