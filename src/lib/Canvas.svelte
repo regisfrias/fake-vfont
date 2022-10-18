@@ -1,0 +1,159 @@
+<script lang="ts">
+  import { afterUpdate } from 'svelte';
+  import { Typr, TyprU } from 'typr-ts'; // Library to load and parse the font files [TODO: link]
+  import RobotoSlabBlack from '../assets/fonts/RobotoSlab-Black.ttf'; // Bold font
+  import RobotoSlabThin from '../assets/fonts/RobotoSlab-Thin.ttf';   // Thin font
+  import { loadFont, getDPR, layoutText, pathDiffs, distanceToPoint } from './utils';
+  import type { TextBoxType, ControlsType } from '../types';
+  
+  export let controls: ControlsType;
+  export let textBox: TextBoxType;
+  let canvas: HTMLCanvasElement;
+
+  ////////////////
+  // Load fonts //
+  // 1.1. Load fonts as promises (see 'utils.js')
+  const fontStrongBuffer = loadFont(RobotoSlabBlack);
+  const fontMildBuffer = loadFont(RobotoSlabThin);
+  let fontStrong;
+  let fontMild;
+
+  Promise.all([fontStrongBuffer, fontMildBuffer]).then(function(fonts) {
+    // 1.1. We get the fonts as a ArrayBuffers ('fonts')
+    // 2. Parse ArrayBuffers to get font objects
+    fontStrong = Typr.parse(fonts[0]);
+    fontMild = Typr.parse(fonts[1]);
+
+    // 3. After we have the font objects
+    //    we trigger the drawing function,
+    //    which will print things on screen
+    draw();
+  });
+  ////////////////
+
+  afterUpdate(() => {
+    if (textBox) {
+      draw()
+    }
+  })
+
+  function draw() {
+    // // 4. Set canvas width to match sourceTextBox
+    canvas.width = Math.floor(textBox.width * getDPR());
+    canvas.height = Math.floor(textBox.height *getDPR());
+  
+    // // Get font size as rendered in sourceTextBox
+    // fontSize = window.getComputedStyle(sourceTextBox, null).fontSize.split('px')[0];
+  
+    // Set up canvas
+    const scale = textBox.fontSize*getDPR() / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // redraw on blank canvas every frame
+    scaleCnv(canvas); // Set canvas size to the same as sourceTextBox based on device pixel ratio
+    ctx.scale(scale,-scale); // Also scale the 2D context
+
+    // 5. Lay out text based on the text box.
+    //    The sourceText comes as a continuous string,
+    //    so we need to break lines according to font size
+    //    and amount of text.
+    const laidoutText = layoutText(textBox.text, fontStrong, scale, canvas.width);  
+    let tpath = {cmds:[], crds:[]};
+
+    // 6. Loop through each line of laid out text.
+    laidoutText.map( (txt, lineNumber ) => {
+      // Get glyph IDs    
+      const gls = TyprU.stringToGlyphs(fontStrong, txt);
+
+      // Initialise 'x' position
+      let x = 0;
+
+      // 6.a Loop through each glyph.
+      for(var i=0; i<gls.length; i++) {
+        var gid = gls[i];
+        if(gid==-1) continue;
+
+        var gid2 = (i<gls.length-1 && gls[i+1]!=-1)  ? gls[i+1] : 0;
+        var path = TyprU.glyphToPath(fontMild, gid);
+        var pathStrong = TyprU.glyphToPath(fontStrong, gid);
+        const diffs = pathDiffs(path, pathStrong);
+
+        // 6.b Loop through each coordinate.
+        for(var j=0; j<path.crds.length; j+=2) {
+          // Get difference between each coordinate (bold to thin)
+          const pointX = path.crds[j] + x;
+          const pointXDiff = diffs.crds[j];
+          const pointY = path.crds[j+1];
+          const pointYDiff = diffs.crds[j+1];
+          
+          // If 'bulge' is set to true
+          // get the distance between current point
+          // and bulge position (slider 0–slider width)
+          const bulgeAmount = controls.bulge ? distanceToPoint(pointX*scale, controls.bulgeCenter * textBox.width, 0, canvas.width) : 1;
+
+          // 6.c. For each coordinate multiply the amount of thickness and the diff between each font weight.
+          const coordX = pointX + (pointXDiff * controls.thickness * bulgeAmount);
+          const coordY = pointY + (pointYDiff * controls.thickness * bulgeAmount) - ((lineNumber+0.75) * fontStrong.head.unitsPerEm);
+
+          // Add the coordinates to the array
+          // This will be added to the canvas context by
+          // 'TyprU.pathToContext(tpath, ctx)' (see below)
+          tpath.crds.push(coordX);
+          tpath.crds.push(coordY);
+        }
+
+        for(var j=0; j<path.cmds.length; j++) tpath.cmds.push(path.cmds[j]);
+
+        // Correct letter spacing for bulge if set.
+        const bulgeAmount = controls.bulge ? distanceToPoint(x*scale, controls.bulgeCenter * textBox.width, 0, canvas.width) : 1;
+        
+        const diff = fontStrong.hmtx.aWidth[gid] - fontMild.hmtx.aWidth[gid];
+
+        // Increment 'x' position for each glyph by its width
+        // Also compensate for font weight (if thin, this should be smaller)
+        x += fontMild.hmtx.aWidth[gid] + (diff * controls.thickness * bulgeAmount);
+
+        // Adjust kerning
+        if(i<gls.length-1) x += TyprU.getPairAdjustment(fontStrong, gid, gid2);
+      }
+    });
+
+    // ctx.fillStyle = textColor;
+    ctx.fillStyle = 'black';
+    TyprU.pathToContext(tpath, ctx);
+    ctx.fill('evenodd');
+  }
+
+
+  // function onKeyUp(evt) {
+  //   sourceText = sourceTextBox.value; // Update sourceText with new text if there is any.
+  //   requestAnimationFrame(draw);  // Update canvas.
+  // }
+
+  // function onChangeThickness(evt) {
+  //   controls.thickness = parseFloat(evt.target.value);
+  //   requestAnimationFrame(draw);
+  // }
+
+  // function onBulge(evt) {
+  //   bulge = evt.target.checked;
+
+  //   if (bulge) {
+  //     document.querySelector('.bulge-control-wrapper').classList.remove('hide');
+  //   } else {
+  //     document.querySelector('.bulge-control-wrapper').classList.add('hide');
+  //   }
+
+  //   requestAnimationFrame(draw);
+  // }
+
+  // function onChangeBulge(evt) {
+  //   controls.bulgeCenter = parseFloat(evt.target.value);
+  //   requestAnimationFrame(draw);
+  // }
+
+  function scaleCnv(canvas) {
+    canvas.setAttribute("style", "width:"+(canvas.width/getDPR())+"px; height:"+(canvas.height/getDPR())+"px");
+  }
+</script>
+
+<canvas class="text-box" bind:this={canvas}></canvas>
