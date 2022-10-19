@@ -3,7 +3,7 @@
   import type { TextBoxType } from '../types';
   export let textBox: TextBoxType;
   
-  let text = 'Non consectetur libero tenetur molestiae qui. Et sint sunt excepturi odit.';
+  let text = 'Non consectetur libero tenetur molestiae qui.';
   let reference: HTMLTextAreaElement;
   
   function onChangeText(target: HTMLTextAreaElement) {
@@ -27,7 +27,14 @@
 <style>
   textarea {
     width: 100%;
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 1;
+    font-weight: 900;
+  }
+
+  @media screen and (min-width: 700px) {
+    textarea {
+      font-size: 5rem;
+    }
   }
 </style>

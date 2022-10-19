@@ -49,6 +49,7 @@
     const scale = textBox.fontSize*getDPR() / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height); // redraw on blank canvas every frame
+
     scaleCnv(canvas); // Set canvas size to the same as sourceTextBox based on device pixel ratio
     ctx.scale(scale,-scale); // Also scale the 2D context
 
@@ -122,34 +123,6 @@
     TyprU.pathToContext(tpath, ctx);
     ctx.fill('evenodd');
   }
-
-
-  // function onKeyUp(evt) {
-  //   sourceText = sourceTextBox.value; // Update sourceText with new text if there is any.
-  //   requestAnimationFrame(draw);  // Update canvas.
-  // }
-
-  // function onChangeThickness(evt) {
-  //   controls.thickness = parseFloat(evt.target.value);
-  //   requestAnimationFrame(draw);
-  // }
-
-  // function onBulge(evt) {
-  //   bulge = evt.target.checked;
-
-  //   if (bulge) {
-  //     document.querySelector('.bulge-control-wrapper').classList.remove('hide');
-  //   } else {
-  //     document.querySelector('.bulge-control-wrapper').classList.add('hide');
-  //   }
-
-  //   requestAnimationFrame(draw);
-  // }
-
-  // function onChangeBulge(evt) {
-  //   controls.bulgeCenter = parseFloat(evt.target.value);
-  //   requestAnimationFrame(draw);
-  // }
 
   function scaleCnv(canvas) {
     canvas.setAttribute("style", "width:"+(canvas.width/getDPR())+"px; height:"+(canvas.height/getDPR())+"px");
