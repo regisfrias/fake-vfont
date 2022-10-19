@@ -26,7 +26,7 @@
 </main>
 
 <footer>
-  <p>&copy; Régis Frias 2022</p>
+  <p>&copy; <a href="https://regisfrias.com/">Régis Frias</a> 2022</p>
   <a href="https://github.com/regisfrias/fake-vfont">Source code</a>
 </footer>
 
