@@ -1,3 +1,15 @@
+# Fake Variable Font
+
+A proof of concept for a text with continuous font thickness. This allows two separate font files (thin and a bold) to behave as if they were a single file with continous thickness — similar to OpenType font variations.
+
+Context / background: https://masters-thesis.regisfrias.com/
+
+![Rendered text](fake-vfont.png)
+
+***
+
+Created with Svelte + Vite. See below:
+
 # Svelte + TS + Vite
 
 This template should help get you started developing with Svelte and TypeScript in Vite.
