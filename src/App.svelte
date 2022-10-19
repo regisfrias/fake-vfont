@@ -13,11 +13,13 @@
 
   <p>A proof of concept for a text with continuous font thickness. This allows two separate font files (thin and a bold) to behave as if they were a single file with continous thickness — similar to OpenType font variations.</p>
 
+  <p><a href="https://masters-thesis.regisfrias.com/">Context / background →</a></p>
+
 </header>
 
 <main>
   <h2>Source text</h2>
-  <!-- <textarea bind:value={sourceText}></textarea> -->
+  <p>Type your own:</p>
 
   <TextArea bind:textBox={textBox} />
 
@@ -29,5 +31,12 @@
 </main>
 
 <footer>
+  <p>&copy; Régis Frias 2022</p>
   <a href="https://github.com/regisfrias/fake-vfont">Source code</a>
 </footer>
+
+<style>
+  footer {
+    margin-top: 8rem;
+  }
+</style>
