@@ -37,28 +37,27 @@
   {#if textBox && textBox.height}
   <div class="control bulge-control-y-wrapper">
     <div class="rotate" style="width: {textBox.height}px; transform: translate(-{textBox.height / 2 - 40}px, {textBox.height / 2}px) rotate(-90deg);">
-      <input name="bulge-y" class="bulge-control" type="range" min="0" max="1" step="0.001" bind:value={bulgeCenterY}>
-      <input type="checkbox" bind:checked={bulgeY}><label for="bulge-y">Bulge vertical</label>
+      <input class="bulge-control" disabled={!bulgeY} type="range" min="0" max="1" step="0.001" bind:value={bulgeCenterY}>
+      <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
     </div>
   </div>
   {/if}
 </div>
 
-
 <p>
   <span class="control bulge-control-x-wrapper">
-    <input class="bulge-control" type="range" min="0" max="1" step="0.001" bind:value={bulgeCenterX}>
+    <input class="bulge-control" disabled={!bulgeX} type="range" min="0" max="1" step="0.001" bind:value={bulgeCenterX}>
   </span>
-  <input type="checkbox" bind:checked={bulgeX}> Bulge horizontal
+  <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
 </p>
 
 <p>
-  Thickness
   <span class="control thickness">
     <span class="label">Thin</span>
     <input class="thickness-control" type="range" name="" id="" min="0" max="1" step="0.001" bind:value={thickness}>
     <span class="label">Bold</span>
   </span>
+  Thickness
 </p>
 
 <style>
@@ -70,6 +69,10 @@
   input[type=range] {
     display: block;
     width: 100%;
+  }
+
+  label {
+    cursor: pointer;
   }
 
   .canvas_wrapper {
