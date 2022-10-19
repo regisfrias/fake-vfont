@@ -1,11 +1,11 @@
 @font-face {
   font-family: Roboto Slab;
-  src: url('fonts/RobotoSlab-Black.ttf');
+  src: url('/fonts/RobotoSlab-Black.ttf');
   font-weight: 900;
 }
 @font-face {
   font-family: Roboto Slab;
-  src: url('fonts/RobotoSlab-Thin.ttf');
+  src: url('/fonts/RobotoSlab-Thin.ttf');
   font-weight: 100;
 }
 
