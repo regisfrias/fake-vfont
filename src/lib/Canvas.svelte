@@ -85,15 +85,18 @@
           const pointXDiff = diffs.crds[j];
           const pointY = path.crds[j+1];
           const pointYDiff = diffs.crds[j+1];
+          const yOffset = (lineNumber+0.75) * fontStrong.head.unitsPerEm;
           
           // If 'bulge' is set to true
           // get the distance between current point
           // and bulge position (slider 0–slider width)
-          const bulgeAmount = controls.bulge ? distanceToPoint(pointX*scale, controls.bulgeCenter * textBox.width, 0, canvas.width) : 1;
+          const bulgeX = distanceToPoint(pointX * scale, controls.bulge.x.center * textBox.width, 0, canvas.width);
+          const bulgeY = distanceToPoint((pointY - yOffset) * scale, (controls.bulge.y.center -+ 1) * textBox.height, 0, canvas.height);
+          const bulgeAmount = (controls.bulge.x.on ? bulgeX : 1) * (controls.bulge.y.on ? bulgeY : 1);
 
           // 6.c. For each coordinate multiply the amount of thickness and the diff between each font weight.
           const coordX = pointX + (pointXDiff * controls.thickness * bulgeAmount);
-          const coordY = pointY + (pointYDiff * controls.thickness * bulgeAmount) - ((lineNumber+0.75) * fontStrong.head.unitsPerEm);
+          const coordY = pointY + (pointYDiff * controls.thickness * bulgeAmount) - yOffset;
 
           // Add the coordinates to the array
           // This will be added to the canvas context by
@@ -105,7 +108,7 @@
         for(var j=0; j<path.cmds.length; j++) tpath.cmds.push(path.cmds[j]);
 
         // Correct letter spacing for bulge if set.
-        const bulgeAmount = controls.bulge ? distanceToPoint(x*scale, controls.bulgeCenter * textBox.width, 0, canvas.width) : 1;
+        const bulgeAmount = controls.bulge.x.on ? distanceToPoint(x*scale, controls.bulge.x.center * textBox.width, 0, canvas.width) : 1;
         
         const diff = fontStrong.hmtx.aWidth[gid] - fontMild.hmtx.aWidth[gid];
 

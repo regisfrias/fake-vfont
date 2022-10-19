@@ -1,6 +1,5 @@
 <script lang="ts">
   import Controls from "./lib/Controls.svelte";
-  import Canvas from "./lib/Canvas.svelte";
   import TextArea from "./lib/TextArea.svelte";
   import type { TextBoxType, ControlsType } from './types';
 
@@ -23,11 +22,7 @@
 
   <TextArea bind:textBox={textBox} />
 
-  <h2>Rendered text</h2>
-
-  <Canvas bind:textBox={textBox} bind:controls={controls} />
-
-  <Controls bind:controls={controls} />
+  <Controls bind:controls={controls} bind:textBox={textBox} />
 </main>
 
 <footer>

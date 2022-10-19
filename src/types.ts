@@ -5,8 +5,15 @@ export interface TextBoxType {
   height: number
 }
 
+interface Bulge {
+  on: boolean
+  center: number
+}
+
 export interface ControlsType {
   thickness: number
-  bulgeCenter: number
-  bulge: boolean
+  bulge: {
+    x: Bulge
+    y: Bulge
+  }
 }
