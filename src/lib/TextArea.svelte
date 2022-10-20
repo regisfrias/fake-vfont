@@ -2,10 +2,10 @@
   import { afterUpdate } from 'svelte';
   import type { TextBoxType } from '../types';
   export let textBox: TextBoxType;
-  
-  let text = 'Non consectetur libero tenetur molestiae qui.';
+
+  let text = 'This is not a variable font.';
   let reference: HTMLTextAreaElement;
-  
+
   function onChangeText(target: HTMLTextAreaElement) {
     target.style.height = '0';
     textBox = {
@@ -14,7 +14,7 @@
       height: target.scrollHeight,
       fontSize: parseInt(window.getComputedStyle(target, null).fontSize)
     }
-    
+
     target.style.height = `${textBox.height}px`;
   }
 
@@ -27,14 +27,20 @@
 <style>
   textarea {
     width: 100%;
-    font-size: 2rem;
+    font-size: 3rem;
     line-height: 1;
     font-weight: 900;
   }
 
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 500px) {
     textarea {
-      font-size: 5rem;
+      font-size: 4rem;
+    }
+  }
+
+  @media screen and (min-width: 780px) {
+    textarea {
+      font-size: 6rem;
     }
   }
 </style>

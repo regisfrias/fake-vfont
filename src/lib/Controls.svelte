@@ -26,17 +26,19 @@
       }
     }
   })
+
+  $: cssVarStyles = `
+    --textbox-height: ${textBox && textBox.height ? textBox.height : 0}px;
+    --slider-translate: translate(-${textBox && textBox.height ? textBox.height / 2 - 40 : 0}px, ${textBox && textBox.height ? textBox.height / 2 : 0}px);
+  `;
 </script>
 
-<p>
-</p>
-
 <h2>Rendered text</h2>
-<div class="canvas_wrapper">
+<div class="canvas_wrapper" style="{cssVarStyles}">
   <Canvas bind:textBox={textBox} bind:controls={controls} />
   {#if textBox && textBox.height}
   <div class="control bulge-control-y-wrapper">
-    <div class="rotate" style="width: {textBox.height}px; transform: translate(-{textBox.height / 2 - 40}px, {textBox.height / 2}px) rotate(-90deg);">
+    <div class="rotate">
       <input class="bulge-control" disabled={!bulgeY} type="range" min="0" max="1" step="0.001" bind:value={bulgeCenterY}>
       <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
     </div>
@@ -75,10 +77,6 @@
     cursor: pointer;
   }
 
-  .canvas_wrapper {
-    display: flex;
-  }
-
   .bulge-control-x-wrapper {
     display: flex;
   }
@@ -92,5 +90,16 @@
   }
   .thickness .label:last-child {
     padding-left: 1rem;
+  }
+
+  @media screen and (min-width: 900px) {
+    .canvas_wrapper {
+      display: flex;
+    }
+
+    .rotate {
+      width: var(--textbox-height);
+      transform: var(--slider-translate) rotate(-90deg);;
+    }
   }
 </style>
