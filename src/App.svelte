@@ -25,6 +25,16 @@
   <Controls bind:controls={controls} bind:textBox={textBox} />
 </main>
 
+<aside>
+  <h2>How does this work?</h2>
+  <ol>
+    <li>Two font files (thin and <strong>black</strong>) are loaded.</li>
+    <li>The vector data of each glyph is read and mapped between the two font weights.</li>
+    <li>The glyph vector data is interpolated linearly.</li>
+  </ol>
+  <p>See the full explanation <a href="https://masters-thesis.regisfrias.com/3000.html#typography">here</a>. Or check <a href="https://github.com/regisfrias/fake-vfont/blob/main/src/lib/Canvas.svelte">this file</a>.</p>
+</aside>
+
 <footer>
   <p>&copy; <a href="https://regisfrias.com/">Régis Frias</a> 2022</p>
   <a href="https://github.com/regisfrias/fake-vfont">Source code</a>
