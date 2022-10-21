@@ -10,5 +10,9 @@ export interface ControlsType {
   bulge: {
     x: boolean
     y: boolean
+  },
+  radius: {
+    x: number
+    y: number
   }
 }
