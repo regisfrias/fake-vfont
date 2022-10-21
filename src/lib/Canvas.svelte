@@ -8,6 +8,7 @@
   
   export let controls: ControlsType;
   export let textBox: TextBoxType;
+  let drag = {isDragging: false, x: 0, y: 0}
   let canvas: HTMLCanvasElement;
 
   ////////////////
@@ -90,9 +91,9 @@
           // If 'bulge' is set to true
           // get the distance between current point
           // and bulge position (slider 0–slider width)
-          const bulgeX = distanceToPoint(pointX * scale, controls.bulge.x.center * textBox.width, 0, canvas.width);
-          const bulgeY = distanceToPoint((pointY - yOffset) * scale, (controls.bulge.y.center -+ 1) * textBox.height, 0, canvas.height);
-          const bulgeAmount = (controls.bulge.x.on ? bulgeX : 1) * (controls.bulge.y.on ? bulgeY : 1);
+          const bulgeX = distanceToPoint(pointX * scale, drag.x * textBox.width, 0, canvas.width);
+          const bulgeY = distanceToPoint((pointY - yOffset) * scale, (drag.y -+ 1) * textBox.height, 0, canvas.height);
+          const bulgeAmount = (controls.bulge.x ? bulgeX : 1) * (controls.bulge.y ? bulgeY : 1);
 
           // 6.c. For each coordinate multiply the amount of thickness and the diff between each font weight.
           const coordX = pointX + (pointXDiff * controls.thickness * bulgeAmount);
@@ -108,7 +109,7 @@
         for(var j=0; j<path.cmds.length; j++) tpath.cmds.push(path.cmds[j]);
 
         // Correct letter spacing for bulge if set.
-        const bulgeAmount = controls.bulge.x.on ? distanceToPoint(x*scale, controls.bulge.x.center * textBox.width, 0, canvas.width) : 1;
+        const bulgeAmount = controls.bulge.x ? distanceToPoint(x*scale, drag.x * textBox.width, 0, canvas.width) : 1;
         
         const diff = fontStrong.hmtx.aWidth[gid] - fontMild.hmtx.aWidth[gid];
 
@@ -130,6 +131,46 @@
   function scaleCnv(canvas) {
     canvas.setAttribute("style", "width:"+(canvas.width/getDPR())+"px; height:"+(canvas.height/getDPR())+"px");
   }
+
+  function setDrag(evt: MouseEvent) {
+    const target = (evt.target as HTMLCanvasElement);
+    const x = evt.offsetX / target.width;
+    const y = 1 - (evt.offsetY / target.height);
+    return { x, y }
+  }
+
+  function onDragStart(evt: MouseEvent) {
+    const {x, y} = setDrag(evt);
+    drag = {isDragging: true, x, y}
+  }
+
+  function onDrag(evt) {
+    if (drag.isDragging) {
+      const {x, y} = setDrag(evt);
+      drag.x = x;
+      drag.y = y;
+      draw();
+    }
+  }
+
+  function onDragEnd() {
+    drag.isDragging = false;
+  }
 </script>
 
-<canvas class="text-box" bind:this={canvas}></canvas>
+<canvas
+  on:mousedown={onDragStart}
+  on:mousemove={onDrag}
+  on:mouseup={onDragEnd}
+  bind:this={canvas}
+  class={drag.isDragging ? 'dragging' : 'not-dragging'}
+></canvas>
+
+<style>
+  .dragging {
+    cursor: move;
+  }
+  .not-dragging {
+    cursor: crosshair;
+  }
+</style>

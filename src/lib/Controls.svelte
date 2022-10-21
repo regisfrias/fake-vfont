@@ -6,8 +6,6 @@
   export let textBox: TextBoxType;
 
   let thickness = 1
-  let bulgeCenterX = 0
-  let bulgeCenterY = 1
   let bulgeX = true
   let bulgeY = false
 
@@ -15,51 +13,31 @@
     controls = {
       thickness,
       bulge: {
-        x: {
-          on: bulgeX,
-          center: bulgeCenterX,
-        },
-        y: {
-          on: bulgeY,
-          center: bulgeCenterY,
-        },
+        x: bulgeX,
+        y: bulgeY,
       }
     }
   })
-
-  $: cssVarStyles = `
-    --textbox-height: ${textBox && textBox.height ? textBox.height : 0}px;
-    --slider-translate: translate(-${textBox && textBox.height ? textBox.height / 2 - 40 : 0}px, ${textBox && textBox.height ? textBox.height / 2 : 0}px);
-  `;
 </script>
 
 <h2>Rendered text</h2>
-<div class="canvas_wrapper" style="{cssVarStyles}">
-  <Canvas bind:textBox={textBox} bind:controls={controls} />
-  {#if textBox && textBox.height}
-  <div class="control bulge-control-y-wrapper">
-    <div class="rotate">
-      <input class="bulge-control" disabled={!bulgeY} type="range" min="0" max="1" step="0.001" bind:value={bulgeCenterY}>
-      <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
-    </div>
-  </div>
-  {/if}
-</div>
+
+<p>Click and drag on the text below to move the boldness around:</p>
+
+<Canvas bind:textBox={textBox} bind:controls={controls} />
 
 <p>
-  <span class="control bulge-control-x-wrapper">
-    <input class="bulge-control" disabled={!bulgeX} type="range" min="0" max="1" step="0.001" bind:value={bulgeCenterX}>
-  </span>
   <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
+  <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
 </p>
 
 <p>
   <span class="control thickness">
+    <label for="thickness-control">Thickness:</label>
     <span class="label">Thin</span>
-    <input class="thickness-control" type="range" name="" id="" min="0" max="1" step="0.001" bind:value={thickness}>
+    <input class="thickness-control" type="range" name="thickness-control" id="thickness-control" min="0" max="1" step="0.001" bind:value={thickness}>
     <span class="label">Bold</span>
   </span>
-  Thickness
 </p>
 
 <style>
@@ -77,12 +55,12 @@
     cursor: pointer;
   }
 
-  .bulge-control-x-wrapper {
+  .thickness {
     display: flex;
   }
 
-  .thickness {
-    display: flex;
+  .thickness label {
+    margin-right: 1rem;
   }
 
   .thickness .label:first-child {
@@ -90,16 +68,5 @@
   }
   .thickness .label:last-child {
     padding-left: 1rem;
-  }
-
-  @media screen and (min-width: 900px) {
-    .canvas_wrapper {
-      display: flex;
-    }
-
-    .rotate {
-      width: var(--textbox-height);
-      transform: var(--slider-translate) rotate(-90deg);;
-    }
   }
 </style>
