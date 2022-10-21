@@ -8,7 +8,8 @@
   
   export let controls: ControlsType;
   export let textBox: TextBoxType;
-  let drag = {isDragging: false, x: 0, y: 0}
+  let hover = false;
+  let drag = {isDragging: false, x: 0, y: 0, xAbs: 0, yAbs: 0}
   let canvas: HTMLCanvasElement;
 
   ////////////////
@@ -50,6 +51,7 @@
     const scale = textBox.fontSize*getDPR() / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height); // redraw on blank canvas every frame
+    ctx.save();
 
     scaleCnv(canvas); // Set canvas size to the same as sourceTextBox based on device pixel ratio
     ctx.scale(scale,-scale); // Also scale the 2D context
@@ -122,10 +124,21 @@
       }
     });
 
-    // ctx.fillStyle = textColor;
     ctx.fillStyle = 'black';
     TyprU.pathToContext(tpath, ctx);
     ctx.fill('evenodd');
+
+    ctx.restore();
+
+    if (hover) {
+      ctx.beginPath();
+      ctx.strokeStyle = '#678f9f';
+      ctx.moveTo(drag.xAbs, drag.yAbs - 20);
+      ctx.lineTo(drag.xAbs, drag.yAbs + 20);
+      ctx.moveTo(drag.xAbs - 20, drag.yAbs);
+      ctx.lineTo(drag.xAbs + 20, drag.yAbs);
+      ctx.stroke();
+    }
   }
 
   function scaleCnv(canvas) {
@@ -136,19 +149,23 @@
     const target = (evt.target as HTMLCanvasElement);
     const x = evt.offsetX / target.width;
     const y = 1 - (evt.offsetY / target.height);
-    return { x, y }
+    const xAbs = evt.offsetX;
+    const yAbs = evt.offsetY;
+    return { x, y, xAbs, yAbs }
   }
 
   function onDragStart(evt: MouseEvent) {
-    const {x, y} = setDrag(evt);
-    drag = {isDragging: true, x, y}
+    const {x, y, xAbs, yAbs} = setDrag(evt);
+    drag = {isDragging: true, x, y, xAbs, yAbs}
   }
 
   function onDrag(evt) {
     if (drag.isDragging) {
-      const {x, y} = setDrag(evt);
+      const {x, y, xAbs, yAbs} = setDrag(evt);
       drag.x = x;
       drag.y = y;
+      drag.xAbs = xAbs;
+      drag.yAbs = yAbs;
       draw();
     }
   }
@@ -162,15 +179,7 @@
   on:mousedown={onDragStart}
   on:mousemove={onDrag}
   on:mouseup={onDragEnd}
+  on:mouseenter={() => {hover = true}}
+  on:mouseleave={() => {hover = false}}
   bind:this={canvas}
-  class={drag.isDragging ? 'dragging' : 'not-dragging'}
 ></canvas>
-
-<style>
-  .dragging {
-    cursor: move;
-  }
-  .not-dragging {
-    cursor: crosshair;
-  }
-</style>
