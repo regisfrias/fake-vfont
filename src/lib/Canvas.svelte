@@ -8,7 +8,6 @@
   
   export let controls: ControlsType;
   export let textBox: TextBoxType;
-  let hover = false;
   let drag = {isDragging: false, x: 0, y: 0, xAbs: 0, yAbs: 0}
   let canvas: HTMLCanvasElement;
 
@@ -131,13 +130,17 @@
 
     ctx.restore();
 
-    if (hover) {
+    if (controls.debug) {
       ctx.beginPath();
       ctx.strokeStyle = '#678f9f';
       ctx.moveTo(drag.xAbs, drag.yAbs - 20);
       ctx.lineTo(drag.xAbs, drag.yAbs + 20);
       ctx.moveTo(drag.xAbs - 20, drag.yAbs);
       ctx.lineTo(drag.xAbs + 20, drag.yAbs);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.ellipse(drag.xAbs, drag.yAbs, controls.radius.x, controls.radius.y, 0, -Math.PI, Math.PI);
       ctx.stroke();
     }
   }
@@ -180,7 +183,5 @@
   on:mousedown={onDragStart}
   on:mousemove={onDrag}
   on:mouseup={onDragEnd}
-  on:mouseenter={() => {hover = true}}
-  on:mouseleave={() => {hover = false}}
   bind:this={canvas}
 ></canvas>

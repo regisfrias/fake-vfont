@@ -10,6 +10,7 @@
   let bulgeY = true
   let radiusX = 300
   let radiusY = 300
+  let debug = false
 
   afterUpdate(() => {
     controls = {
@@ -22,6 +23,7 @@
         x: radiusX,
         y: radiusY
       },
+      debug
     }
   })
 </script>
@@ -35,6 +37,7 @@
 <p>
   <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
   <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
+  <label for="debug"><input id="debug" type="checkbox" bind:checked={debug}>Show distortion circle</label>
 </p>
 
 <p>

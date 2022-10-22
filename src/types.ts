@@ -14,5 +14,6 @@ export interface ControlsType {
   radius: {
     x: number
     y: number
-  }
+  },
+  debug: boolean
 }
