@@ -149,16 +149,22 @@
     canvas.setAttribute("style", "width:"+(canvas.width/getDPR())+"px; height:"+(canvas.height/getDPR())+"px");
   }
 
-  function setDrag(evt: MouseEvent) {
+  function setDrag(evt: MouseEvent | TouchEvent) {
+    const isTouch = evt instanceof TouchEvent;
+    if (isTouch) {
+      evt.preventDefault();
+    }
+    const offsetX = isTouch ? evt.touches[0].clientX : evt.offsetX;
+    const offsetY = isTouch ? evt.touches[0].clientY : evt.offsetY;
     const target = (evt.target as HTMLCanvasElement);
-    const x = evt.offsetX / target.width;
-    const y = 1 - (evt.offsetY / target.height);
-    const xAbs = evt.offsetX;
-    const yAbs = evt.offsetY;
+    const x = offsetX / target.width;
+    const y = 1 - (offsetY / target.height);
+    const xAbs = offsetX;
+    const yAbs = offsetY;
     return { x, y, xAbs, yAbs }
   }
 
-  function onDragStart(evt: MouseEvent) {
+  function onDragStart(evt: MouseEvent | TouchEvent) {
     const {x, y, xAbs, yAbs} = setDrag(evt);
     drag = {isDragging: true, x, y, xAbs, yAbs}
   }
@@ -181,7 +187,10 @@
 
 <canvas
   on:mousedown={onDragStart}
+  on:touchstart={onDragStart}
   on:mousemove={onDrag}
+  on:touchmove={onDrag}
   on:mouseup={onDragEnd}
+  on:touchend={onDragEnd}
   bind:this={canvas}
 ></canvas>
