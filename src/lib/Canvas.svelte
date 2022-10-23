@@ -39,15 +39,13 @@
   })
 
   function draw() {
-    // // 4. Set canvas width to match sourceTextBox
-    canvas.width = Math.floor(textBox.width * getDPR());
-    canvas.height = Math.floor(textBox.height *getDPR());
-  
-    // // Get font size as rendered in sourceTextBox
-    // fontSize = window.getComputedStyle(sourceTextBox, null).fontSize.split('px')[0];
+    const dpr = getDPR();
+    // 4. Set canvas width to match sourceTextBox
+    canvas.width = Math.floor(textBox.width * dpr);
+    canvas.height = Math.floor(textBox.height *dpr);
   
     // Set up canvas
-    const scale = textBox.fontSize*getDPR() / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
+    const scale = textBox.fontSize*dpr / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height); // redraw on blank canvas every frame
     ctx.save();
@@ -146,16 +144,18 @@
   }
 
   function scaleCnv(canvas) {
-    canvas.setAttribute("style", "width:"+(canvas.width/getDPR())+"px; height:"+(canvas.height/getDPR())+"px");
+    const dpr = getDPR();
+    canvas.setAttribute("style", "width:"+(canvas.width/dpr)+"px; height:"+(canvas.height/dpr)+"px");
   }
 
   function setDrag(evt: MouseEvent | TouchEvent) {
+    const dpr = getDPR();
     const isTouch = evt instanceof TouchEvent;
     if (isTouch) {
       evt.preventDefault();
     }
-    const offsetX = isTouch ? evt.touches[0].clientX : evt.offsetX;
-    const offsetY = isTouch ? evt.touches[0].clientY : evt.offsetY;
+    const offsetX = (isTouch ? evt.touches[0].clientX : evt.offsetX) * dpr;
+    const offsetY = (isTouch ? evt.touches[0].clientY : evt.offsetY) * dpr;
     const target = (evt.target as HTMLCanvasElement);
     const x = offsetX / target.width;
     const y = 1 - (offsetY / target.height);
