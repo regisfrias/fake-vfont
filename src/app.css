@@ -89,9 +89,13 @@ textarea {
   font-family: Roboto Slab, Helvetica, Arial, sans-serif;
 }
 
-@media screen and (min-width: 780px) {
+ol {
+  padding-left: 1rem;
+}
+
+@media screen and (min-width: 680px) {
   .wrapper {
-    max-width: 700px;
+    max-width: 600px;
   }
 }
 
