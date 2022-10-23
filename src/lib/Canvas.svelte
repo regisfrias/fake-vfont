@@ -90,8 +90,8 @@
           // If 'bulge' is set to true
           // get the distance between current point
           // and bulge position (slider 0–slider width)
-          const bulgeX = distanceToPoint(pointX * scale, drag.x * textBox.width, 0, controls.radius.x) * dpr;
-          const bulgeY = distanceToPoint((pointY - yOffset) * scale, (drag.y -+ 1) * textBox.height, 0, controls.radius.y) * dpr;
+          const bulgeX = distanceToPoint(pointX * scale, drag.x * textBox.width, 0, controls.radius.x);
+          const bulgeY = distanceToPoint((pointY - yOffset) * scale, (drag.y -+ 1) * textBox.height, 0, controls.radius.y);
 
           const bulgeAmount = (controls.bulge.x ? bulgeX : 1) * (controls.bulge.y ? bulgeY : 1);
 
