@@ -22,14 +22,28 @@
   afterUpdate(() => onChangeText(reference))
 </script>
 
-<textarea on:keyup={onKeyUp} bind:value={text} bind:this={reference}></textarea>
+<div class="textarea">
+  <textarea on:keyup={onKeyUp} bind:value={text} bind:this={reference}></textarea>
+</div>
 
 <style>
   textarea {
-    width: 100%;
     font-size: 3rem;
     line-height: 1;
     font-weight: 900;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    margin-bottom: 40px;
+    margin-top: -10px;
+    border: 10px solid transparent;
+    width: calc(100% - 20px);
+  }
+
+  textarea:focus {
+    background-color: rgb(235, 235, 235);
+    border: 10px solid rgb(235, 235, 235);
+    outline: 0;
   }
 
   @media screen and (min-width: 500px) {
@@ -40,7 +54,8 @@
 
   @media screen and (min-width: 780px) {
     textarea {
-      font-size: 6rem;
+      font-size: 8vw;
+      margin-bottom: 0;
     }
   }
 </style>

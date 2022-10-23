@@ -7,7 +7,7 @@
   let controls: ControlsType;
 </script>
 
-<header>
+<header class="wrapper">
   <h1>Fake Variable Font</h1>
 
   <p>A proof of concept for a text with continuous font thickness. This allows two separate font files (thin and a bold) to behave as if they were a single file with continous thickness — similar to OpenType font variations.</p>
@@ -17,15 +17,19 @@
 </header>
 
 <main>
-  <h2>Source text</h2>
-  <p>Type your own:</p>
-
+  <div>
+    <h2>Source text</h2>
+    <p>Type your own:</p>
+  </div>
+  <div>
+    <h2>Rendered text</h2>
+    <p>Click and drag on the text below to move the boldness around:</p>
+  </div>
   <TextArea bind:textBox={textBox} />
-
   <Controls bind:controls={controls} bind:textBox={textBox} />
 </main>
 
-<aside>
+<aside class="wrapper">
   <h2>How does this work?</h2>
   <ol>
     <li>Two font files (thin and <strong>black</strong>) are loaded.</li>
@@ -35,13 +39,30 @@
   <p>See the full explanation <a href="https://masters-thesis.regisfrias.com/3000.html#typography">here</a>. Or check <a href="https://github.com/regisfrias/fake-vfont/blob/main/src/lib/Canvas.svelte">this file</a>.</p>
 </aside>
 
-<footer>
+<footer class="wrapper">
   <p>&copy; <a href="https://regisfrias.com/">Régis Frias</a> 2022</p>
   <a href="https://github.com/regisfrias/fake-vfont">Source code</a>
 </footer>
 
 <style>
+  main {
+    max-width: calc(100% - 80px);
+    margin: 0 auto;
+    padding: 40px;
+  }
+
   footer {
     margin-top: 8rem;
+  }
+
+  @media screen and (min-width: 780px) {
+    main {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
+      grid-column-gap: 40px;
+      max-width: calc(100% - 80px);
+      margin: auto;
+    }
   }
 </style>

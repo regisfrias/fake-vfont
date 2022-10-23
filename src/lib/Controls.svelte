@@ -28,37 +28,35 @@
   })
 </script>
 
-<h2>Rendered text</h2>
+<div>
+  <Canvas bind:textBox={textBox} bind:controls={controls} />
 
-<p>Click and drag on the text below to move the boldness around:</p>
+  <p>
+    <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
+    <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
+    <label for="debug"><input id="debug" type="checkbox" bind:checked={debug}>Show distortion circle</label>
+  </p>
 
-<Canvas bind:textBox={textBox} bind:controls={controls} />
+  <p>
+    <span class="control thickness">
+      <label for="thickness-control">Thickness:</label>
+      <span class="label">Thin</span>
+      <input class="thickness-control" type="range" name="thickness-control" id="thickness-control" min="0" max="1" step="0.001" bind:value={thickness}>
+      <span class="label">Bold</span>
+    </span>
+  </p>
 
-<p>
-  <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
-  <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
-  <label for="debug"><input id="debug" type="checkbox" bind:checked={debug}>Show distortion circle</label>
-</p>
-
-<p>
-  <span class="control thickness">
-    <label for="thickness-control">Thickness:</label>
-    <span class="label">Thin</span>
-    <input class="thickness-control" type="range" name="thickness-control" id="thickness-control" min="0" max="1" step="0.001" bind:value={thickness}>
-    <span class="label">Bold</span>
-  </span>
-</p>
-
-<p>
-  <span class="control radius">
-    <label for="radius-control">Radius horizontal:</label>
-    <input class="radius-control" type="range" name="radius-control" id="radius-control" min="50" max="1000" step="1" bind:value={radiusX}>
-  </span>
-  <span class="control radius">
-    <label for="radius-control">Radius vertical:</label>
-    <input class="radius-control" type="range" name="radius-control" id="radius-control" min="50" max="1000" step="1" bind:value={radiusY}>
-  </span>
-</p>
+  <p>
+    <span class="control radius">
+      <label for="radius-control">Radius horizontal:</label>
+      <input class="radius-control" type="range" name="radius-control" id="radius-control" min="50" max="1000" step="1" bind:value={radiusX}>
+    </span>
+    <span class="control radius">
+      <label for="radius-control">Radius vertical:</label>
+      <input class="radius-control" type="range" name="radius-control" id="radius-control" min="50" max="1000" step="1" bind:value={radiusY}>
+    </span>
+  </p>
+</div>
 
 <style>
   .control {

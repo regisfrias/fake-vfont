@@ -56,7 +56,7 @@ h2 {
   padding: 2em;
 }
 
-#app {
+.wrapper {
   max-width: calc(100% - 80px);
   margin: 0 auto;
   padding: 40px;
@@ -90,7 +90,7 @@ textarea {
 }
 
 @media screen and (min-width: 780px) {
-  #app {
+  .wrapper {
     max-width: 700px;
   }
 }
