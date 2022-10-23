@@ -90,8 +90,8 @@
           // If 'bulge' is set to true
           // get the distance between current point
           // and bulge position (slider 0–slider width)
-          const bulgeX = distanceToPoint(pointX * scale, drag.x * textBox.width, 0, controls.radius.x);
-          const bulgeY = distanceToPoint((pointY - yOffset) * scale, (drag.y -+ 1) * textBox.height, 0, controls.radius.y);
+          const bulgeX = distanceToPoint(pointX * scale, drag.x * textBox.width, 0, controls.radius.x) * dpr;
+          const bulgeY = distanceToPoint((pointY - yOffset) * scale, (drag.y -+ 1) * textBox.height, 0, controls.radius.y) * dpr;
 
           const bulgeAmount = (controls.bulge.x ? bulgeX : 1) * (controls.bulge.y ? bulgeY : 1);
 
@@ -149,13 +149,12 @@
   }
 
   function setDrag(evt: MouseEvent | TouchEvent) {
-    const dpr = getDPR();
     const isTouch = evt instanceof TouchEvent;
     if (isTouch) {
       evt.preventDefault();
     }
-    const offsetX = (isTouch ? evt.touches[0].clientX : evt.offsetX) * dpr;
-    const offsetY = (isTouch ? evt.touches[0].clientY : evt.offsetY) * dpr;
+    const offsetX = isTouch ? evt.touches[0].clientX : evt.offsetX;
+    const offsetY = isTouch ? evt.touches[0].clientY : evt.offsetY;
     const target = (evt.target as HTMLCanvasElement);
     const x = offsetX / target.width;
     const y = 1 - (offsetY / target.height);
