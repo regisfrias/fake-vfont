@@ -160,8 +160,8 @@
     const targetBox = target.getBoundingClientRect();
     const offsetX = (isTouch ? (evt as TouchEvent).touches[0].clientX - targetBox.left : (evt as MouseEvent).offsetX) * dpr;
     const offsetY = (isTouch ? (evt as TouchEvent).touches[0].clientY - targetBox.top : (evt as MouseEvent).offsetY) * dpr;
-    const x = (offsetX / target.width) * dpr;
-    const y = (1 - (offsetY / target.height)) * dpr;
+    const x = (offsetX / target.width);
+    const y = (1 - (offsetY / target.height));
     const xAbs = offsetX;
     const yAbs = offsetY;
     return { x, y, xAbs, yAbs }
@@ -205,6 +205,5 @@
 <style>
   canvas {
     max-width: 100%;
-    border: 1px solid red;
   }
 </style>
