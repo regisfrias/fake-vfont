@@ -17,14 +17,6 @@
 </header>
 
 <main>
-  <div>
-    <h2>Source text</h2>
-    <p>Type your own:</p>
-  </div>
-  <div>
-    <h2>Rendered text</h2>
-    <p>Click and drag on the text below to move the boldness around:</p>
-  </div>
   <TextArea bind:textBox={textBox} />
   <Controls bind:controls={controls} bind:textBox={textBox} />
 </main>
@@ -48,7 +40,6 @@
   main {
     max-width: calc(100% - 80px);
     margin: 0 auto;
-    padding: 40px;
   }
 
   footer {
@@ -59,7 +50,7 @@
     main {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      grid-gap: 10px;
+      grid-row-gap: 10px;
       grid-column-gap: 40px;
       max-width: calc(100% - 80px);
       margin: auto;

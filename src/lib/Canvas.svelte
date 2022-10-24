@@ -200,6 +200,7 @@
   on:mouseup={onDragEnd}
   on:touchend={onDragEnd}
   bind:this={canvas}
+  class="row_body"
 ></canvas>
 
 <style>

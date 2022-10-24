@@ -20,15 +20,19 @@
 
   const onKeyUp = (evt: KeyboardEvent) => onChangeText(evt.target as HTMLTextAreaElement)
   afterUpdate(() => {
-    setTimeout(() => {
-      // Apparently this needs some time to get the height.
-      onChangeText(reference);
-    }, 100)
+    onChangeText(reference);
   })
 </script>
 
-<div class="textarea">
-  <textarea on:keyup={onKeyUp} bind:value={text} bind:this={reference}></textarea>
+<div class="column">
+  <div>
+    <h2>Source text</h2>
+    <p>Type your own:</p>
+  </div>
+
+  <div class="textarea row_body">
+    <textarea on:keyup={onKeyUp} bind:value={text} bind:this={reference}></textarea>
+  </div>
 </div>
 
 <style>
@@ -39,8 +43,7 @@
     padding: 0;
     border: 0;
     margin: 0;
-    margin-bottom: 40px;
-    margin-top: -10px;
+    margin: -10px;
     border: 10px solid transparent;
     width: calc(100% - 20px);
   }
@@ -60,7 +63,6 @@
   @media screen and (min-width: 780px) {
     textarea {
       font-size: 8vw;
-      margin-bottom: 0;
     }
   }
 </style>

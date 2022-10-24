@@ -26,6 +26,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+#app {
+  max-width: 100%;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -96,6 +100,14 @@ ol {
 @media screen and (min-width: 680px) {
   .wrapper {
     max-width: 600px;
+  }
+
+  .column {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(2, auto 1fr);
+    grid-row-gap: 20px;
+    grid-column-gap: 40px;
   }
 }
 
