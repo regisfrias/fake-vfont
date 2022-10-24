@@ -38,14 +38,16 @@
     }
   })
 
+  const isTouchDevice = () => (('ontouchstart' in window) || (navigator.maxTouchPoints > 0))
+
   function draw() {
     const dpr = getDPR();
     // 4. Set canvas width to match sourceTextBox
     canvas.width = Math.floor(textBox.width * dpr);
-    canvas.height = Math.floor(textBox.height *dpr);
+    canvas.height = Math.floor(textBox.height * dpr);
   
     // Set up canvas
-    const scale = textBox.fontSize*dpr / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
+    const scale = textBox.fontSize * dpr / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height); // redraw on blank canvas every frame
     ctx.save();
@@ -149,21 +151,27 @@
   }
 
   function setDrag(evt: MouseEvent | TouchEvent) {
-    const isTouch = evt instanceof TouchEvent;
+    const dpr = getDPR();
+    const isTouch = isTouchDevice();
     if (isTouch) {
       evt.preventDefault();
     }
-    const offsetX = isTouch ? evt.touches[0].clientX : evt.offsetX;
-    const offsetY = isTouch ? evt.touches[0].clientY : evt.offsetY;
     const target = (evt.target as HTMLCanvasElement);
-    const x = offsetX / target.width;
-    const y = 1 - (offsetY / target.height);
+    const targetBox = target.getBoundingClientRect();
+    const offsetX = (isTouch ? (evt as TouchEvent).touches[0].clientX - targetBox.left : (evt as MouseEvent).offsetX) * dpr;
+    const offsetY = (isTouch ? (evt as TouchEvent).touches[0].clientY - targetBox.top : (evt as MouseEvent).offsetY) * dpr;
+    const x = (offsetX / target.width) * dpr;
+    const y = (1 - (offsetY / target.height)) * dpr;
     const xAbs = offsetX;
     const yAbs = offsetY;
     return { x, y, xAbs, yAbs }
   }
 
   function onDragStart(evt: MouseEvent | TouchEvent) {
+    const offset = evt && (evt as TouchEvent).touches ? {
+      x: (evt as TouchEvent).touches[0].clientX,
+      y: (evt as TouchEvent).touches[0].clientY,
+    } : {x: 0, y: 0}
     const {x, y, xAbs, yAbs} = setDrag(evt);
     drag = {isDragging: true, x, y, xAbs, yAbs}
   }
@@ -193,3 +201,10 @@
   on:touchend={onDragEnd}
   bind:this={canvas}
 ></canvas>
+
+<style>
+  canvas {
+    max-width: 100%;
+    border: 1px solid red;
+  }
+</style>
