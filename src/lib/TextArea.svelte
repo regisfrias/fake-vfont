@@ -19,7 +19,12 @@
   }
 
   const onKeyUp = (evt: KeyboardEvent) => onChangeText(evt.target as HTMLTextAreaElement)
-  afterUpdate(() => onChangeText(reference))
+  afterUpdate(() => {
+    setTimeout(() => {
+      // Apparently this needs some time to get the height.
+      onChangeText(reference);
+    }, 100)
+  })
 </script>
 
 <div class="textarea">
