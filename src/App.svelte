@@ -42,10 +42,6 @@
     margin: 0 auto;
   }
 
-  footer {
-    margin-top: 8rem;
-  }
-
   @media screen and (min-width: 780px) {
     main {
       display: grid;
@@ -54,6 +50,10 @@
       grid-column-gap: 40px;
       max-width: calc(100% - 80px);
       margin: auto;
+    }
+
+    footer {
+      margin-top: 8rem;
     }
   }
 </style>
