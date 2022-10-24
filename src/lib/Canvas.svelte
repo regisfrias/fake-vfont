@@ -159,9 +159,9 @@
     const target = (evt.target as HTMLCanvasElement);
     const targetBox = target.getBoundingClientRect();
     const offsetX = (isTouch ? (evt as TouchEvent).touches[0].clientX - targetBox.left : (evt as MouseEvent).offsetX) * dpr;
-    const offsetY = (isTouch ? (evt as TouchEvent).touches[0].clientY - targetBox.top + targetBox.height : (evt as MouseEvent).offsetY) * dpr;
+    const offsetY = (isTouch ? (evt as TouchEvent).touches[0].clientY - targetBox.top : targetBox.height - (evt as MouseEvent).offsetY) * dpr;
     const x = (offsetX / target.width) * dpr;
-    const y = (1 - (offsetY / target.height)) * dpr;
+    const y = (offsetY / target.height) * dpr;
     const xAbs = offsetX;
     const yAbs = offsetY;
     return { x, y, xAbs, yAbs }
