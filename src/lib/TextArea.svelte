@@ -19,9 +19,7 @@
   }
 
   const onKeyUp = (evt: KeyboardEvent) => onChangeText(evt.target as HTMLTextAreaElement)
-  afterUpdate(() => {
-    onChangeText(reference);
-  })
+  afterUpdate(() => onChangeText(reference))
 </script>
 
 <div class="column">

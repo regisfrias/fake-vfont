@@ -37,7 +37,7 @@
   <div>
     <Canvas bind:textBox={textBox} bind:controls={controls} />
 
-    <p>
+    <p class="bulge">
       <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
       <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
       <label for="debug"><input id="debug" type="checkbox" bind:checked={debug}>Show distortion circle</label>
@@ -71,6 +71,10 @@
     width: 100%;
   }
 
+  .bulge label {
+    display: block;
+  }
+
   input[type=range] {
     display: block;
     width: 100%;
@@ -93,5 +97,12 @@
   }
   .thickness .label:last-child {
     padding-left: 1rem;
+  }
+
+  @media screen and (min-width: 680px) {
+    .bulge {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 </style>

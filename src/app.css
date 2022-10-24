@@ -52,10 +52,6 @@ h1 {
   line-height: 1.1;
 }
 
-h2 {
-  margin-top: 5rem;
-}
-
 .card {
   padding: 2em;
 }
@@ -108,6 +104,10 @@ ol {
     grid-template-rows: auto 1fr;
     grid-row-gap: 20px;
     grid-column-gap: 40px;
+  }
+
+  h2 {
+    margin-top: 5rem;
   }
 }
 
