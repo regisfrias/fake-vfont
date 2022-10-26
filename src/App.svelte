@@ -28,7 +28,7 @@
     <li>The vector data of each glyph is read and mapped between the two font weights.</li>
     <li>The glyph vector data is interpolated linearly.</li>
   </ol>
-  <p>See the full explanation <a href="https://masters-thesis.regisfrias.com/3000.html#typography">here</a>. Or check <a href="https://github.com/regisfrias/fake-vfont/blob/main/src/lib/Canvas.svelte">this file</a>.</p>
+  <p>See the full explanation <a href="https://masters-thesis.regisfrias.com/motley-2020-identity.html#typography">here</a>. Or check <a href="https://github.com/regisfrias/fake-vfont/blob/main/src/lib/Canvas.svelte">this file</a>.</p>
 </aside>
 
 <footer class="wrapper">
