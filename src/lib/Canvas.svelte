@@ -192,16 +192,22 @@
   }
 </script>
 
-<canvas
-  on:mousedown={onDragStart}
-  on:touchstart={onDragStart}
-  on:mousemove={onDrag}
-  on:touchmove={onDrag}
-  on:mouseup={onDragEnd}
-  on:touchend={onDragEnd}
-  bind:this={canvas}
-  class="row_body"
-></canvas>
+<div class="column">
+  <div>
+    <h2>Rendered text</h2>
+    <p>Click and drag on the text below to move the boldness around:</p>
+  </div>
+  <canvas
+    on:mousedown={onDragStart}
+    on:touchstart={onDragStart}
+    on:mousemove={onDrag}
+    on:touchmove={onDrag}
+    on:mouseup={onDragEnd}
+    on:touchend={onDragEnd}
+    bind:this={canvas}
+    class="row_body"
+  ></canvas>
+</div>
 
 <style>
   canvas {

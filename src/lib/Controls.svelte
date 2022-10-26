@@ -1,9 +1,7 @@
 <script lang="ts">
   import { afterUpdate, onMount } from 'svelte';
-  import type { ControlsType, TextBoxType } from '../types';
-  import Canvas from './Canvas.svelte';
+  import type { ControlsType } from '../types';
   export let controls: ControlsType;
-  export let textBox: TextBoxType;
   const fontSizeVw = () => window && window.innerWidth && window.innerWidth > 600 ? window.innerWidth / 100 * 8 : 60;
 
   let thickness = 1
@@ -39,46 +37,41 @@
 
 <svelte:window on:resize={onResize} />
 
-<div class="column">
-  <div>
-    <h2>Rendered text</h2>
-    <p>Click and drag on the text below to move the boldness around:</p>
-  </div>
+<div class="bulge">
+  <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
+  <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
+  <label for="debug"><input id="debug" type="checkbox" bind:checked={debug}>Show distortion circle</label>
+  <label for="compensateWidth"><input id="compensateWidth" type="checkbox" bind:checked={compensateWidth}>Compensate width</label>
+</div>
 
-  <div>
-    <Canvas bind:textBox={textBox} bind:controls={controls} />
-
-    <p class="bulge">
-      <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
-      <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
-      <label for="debug"><input id="debug" type="checkbox" bind:checked={debug}>Show distortion circle</label>
-      <label for="compensateWidth"><input id="compensateWidth" type="checkbox" bind:checked={compensateWidth}>Compensate width</label>
-    </p>
-
-    <p>
-      <span class="control thickness">
-        <label for="thickness-control">Thickness:</label>
+<div>
+  <p>
+    <span class="control">
+      <label for="thickness-control">Thickness:</label>
+      <span class="thickness">
         <span class="label">Thin</span>
         <input class="thickness-control" type="range" name="thickness-control" id="thickness-control" min="0" max="1" step="0.001" bind:value={thickness}>
         <span class="label">Bold</span>
       </span>
-    </p>
+    </span>
+    <span class="control size">
+      <label for="size-control">Font size:</label>
+      <input class="size-control" type="range" name="size-control" id="size-control" min="20" max="200" step="1" bind:value={fontSize}>
+    </span>
+  </p>
+</div>
 
-    <p>
-      <span class="control radius">
-        <label for="radius-control-x">Radius horizontal:</label>
-        <input class="radius-control-x" type="range" name="radius-control-x" id="radius-control-x" min="50" max="1000" step="1" bind:value={radiusX}>
-      </span>
-      <span class="control radius">
-        <label for="radius-control-y">Radius vertical:</label>
-        <input class="radius-control-y" type="range" name="radius-control-y" id="radius-control-y" min="50" max="1000" step="1" bind:value={radiusY}>
-      </span>
-      <span class="control size">
-        <label for="size-control">Font size:</label>
-        <input class="size-control" type="range" name="size-control" id="size-control" min="20" max="200" step="1" bind:value={fontSize}>
-      </span>
-    </p>
-  </div>
+<div>
+  <p>
+    <span class="control radius">
+      <label for="radius-control-x">Radius horizontal:</label>
+      <input class="radius-control-x" type="range" name="radius-control-x" id="radius-control-x" min="50" max="1000" step="1" bind:value={radiusX}>
+    </span>
+    <span class="control radius">
+      <label for="radius-control-y">Radius vertical:</label>
+      <input class="radius-control-y" type="range" name="radius-control-y" id="radius-control-y" min="50" max="1000" step="1" bind:value={radiusY}>
+    </span>
+  </p>
 </div>
 
 <style>
@@ -87,14 +80,20 @@
     width: 100%;
   }
 
-  .bulge {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 0.5rem;
+  input {
+    margin-bottom: 2rem;
   }
 
-  .bulge label {
+  .control label {
     display: block;
+  }
+
+  .bulge {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.5rem;
   }
 
   input[type=range] {
@@ -110,10 +109,6 @@
     display: flex;
   }
 
-  .thickness label {
-    margin-right: 1rem;
-  }
-
   .thickness .label:first-child {
     padding-right: 1rem;
   }
@@ -121,9 +116,9 @@
     padding-left: 1rem;
   }
 
-  @media screen and (min-width: 420px) {
+  @media screen and (min-width: 720px) {
     .bulge {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       grid-gap: 0.5rem;
     }
   }

@@ -2,6 +2,7 @@
   import Controls from "./lib/Controls.svelte";
   import TextArea from "./lib/TextArea.svelte";
   import type { TextBoxType, ControlsType } from './types';
+  import Canvas from './lib/Canvas.svelte';
 
   let textBox: TextBoxType;
   let controls: ControlsType;
@@ -18,7 +19,9 @@
 
 <main>
   <TextArea bind:controls={controls} bind:textBox={textBox} />
-  <Controls bind:controls={controls} bind:textBox={textBox} />
+  <Canvas bind:textBox={textBox} bind:controls={controls} />
+
+  <Controls bind:controls={controls} />
 </main>
 
 <aside class="wrapper">
