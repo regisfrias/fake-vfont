@@ -11,6 +11,7 @@
   let radiusX = 300
   let radiusY = 300
   let debug = false
+  let compensateWidth = true
 
   afterUpdate(() => {
     controls = {
@@ -23,7 +24,8 @@
         x: radiusX,
         y: radiusY
       },
-      debug
+      debug,
+      compensateWidth
     }
   })
 </script>
@@ -41,6 +43,7 @@
       <label for="bulge-x"><input id="bulge-x" type="checkbox" bind:checked={bulgeX}>Bulge horizontal</label>
       <label for="bulge-y"><input id="bulge-y" type="checkbox" bind:checked={bulgeY}>Bulge vertical</label>
       <label for="debug"><input id="debug" type="checkbox" bind:checked={debug}>Show distortion circle</label>
+      <label for="compensateWidth"><input id="compensateWidth" type="checkbox" bind:checked={compensateWidth}>Compensate width</label>
     </p>
 
     <p>
@@ -71,6 +74,12 @@
     width: 100%;
   }
 
+  .bulge {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0.5rem;
+  }
+
   .bulge label {
     display: block;
   }
@@ -99,10 +108,16 @@
     padding-left: 1rem;
   }
 
-  @media screen and (min-width: 680px) {
+  @media screen and (min-width: 420px) {
     .bulge {
-      display: flex;
-      justify-content: space-between;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 0.5rem;
     }
+  }
+
+  @media screen and (min-width: 980px) {
+    /* .bulge label {
+      min-width: none;
+    } */
   }
 </style>

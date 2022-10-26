@@ -117,7 +117,7 @@
 
         // Increment 'x' position for each glyph by its width
         // Also compensate for font weight (if thin, this should be smaller)
-        x += fontMild.hmtx.aWidth[gid] + (diff * controls.thickness * bulgeAmount);
+        x += fontMild.hmtx.aWidth[gid] + (diff * (controls.compensateWidth ? controls.thickness * bulgeAmount : 1));
 
         // Adjust kerning
         if(i<gls.length-1) x += TyprU.getPairAdjustment(fontStrong, gid, gid2);

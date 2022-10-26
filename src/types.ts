@@ -16,4 +16,5 @@ export interface ControlsType {
     y: number
   },
   debug: boolean
+  compensateWidth: boolean
 }
