@@ -27,7 +27,7 @@
 <aside class="wrapper">
   <h2>How does this work?</h2>
   <ol>
-    <li>Two font files (thin and <strong>black</strong>) are loaded.</li>
+    <li>Two font files (<span class="thing">thin</span> and <strong>black</strong>) are loaded.</li>
     <li>The vector data of each glyph is read and mapped between the two font weights.</li>
     <li>The glyph vector data is interpolated linearly.</li>
   </ol>

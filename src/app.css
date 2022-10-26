@@ -5,6 +5,11 @@
 }
 @font-face {
   font-family: Roboto Slab;
+  src: url('/fonts/RobotoSlab-Light.ttf');
+  font-weight: 200;
+}
+@font-face {
+  font-family: Roboto Slab;
   src: url('/fonts/RobotoSlab-Thin.ttf');
   font-weight: 100;
 }
@@ -13,7 +18,7 @@
   font-family: Roboto Slab, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
-  font-weight: 400;
+  font-weight: 200;
 
   /* color-scheme: light dark; */
   color: black;
@@ -83,6 +88,14 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+strong {
+  font-weight: 900;
+}
+
+.thing {
+  font-weight: 100;
 }
 
 textarea {
