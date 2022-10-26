@@ -1,13 +1,20 @@
 <script lang="ts">
-  import { afterUpdate } from 'svelte';
+  import { afterUpdate, onMount } from 'svelte';
   import type { TextBoxType } from '../types';
-  export let textBox: TextBoxType;
 
   let text = 'This is not a variable font.';
+  export let textBox = {
+    text: text,
+    width: 0,
+    height: 0,
+    fontSize: 16
+  }
+
   let reference: HTMLTextAreaElement;
 
   function onChangeText(target: HTMLTextAreaElement) {
     target.style.height = '0';
+
     textBox = {
       text: text,
       width: target.offsetWidth,
@@ -19,7 +26,9 @@
   }
 
   const onKeyUp = (evt: KeyboardEvent) => onChangeText(evt.target as HTMLTextAreaElement)
-  afterUpdate(() => onChangeText(reference))
+
+  // Wait a little to get the actual height.
+  onMount(() => setTimeout(() => onChangeText(reference), 50))
 </script>
 
 <div class="column">
