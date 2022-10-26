@@ -47,7 +47,7 @@
     canvas.height = Math.floor(textBox.height * dpr);
   
     // Set up canvas
-    const scale = textBox.fontSize * dpr / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
+    const scale = controls.fontSize * dpr / fontStrong.head.unitsPerEm; // Typr.js uses sizes in 'em' unit
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height); // redraw on blank canvas every frame
     ctx.save();

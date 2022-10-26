@@ -1,6 +1,5 @@
 export interface TextBoxType {
   text: string
-  fontSize: number
   width: number
   height: number
 }
@@ -17,4 +16,5 @@ export interface ControlsType {
   },
   debug: boolean
   compensateWidth: boolean
+  fontSize: number
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { afterUpdate } from 'svelte';
+  import { afterUpdate, onMount } from 'svelte';
   import type { ControlsType, TextBoxType } from '../types';
   import Canvas from './Canvas.svelte';
   export let controls: ControlsType;
@@ -12,6 +12,13 @@
   let radiusY = 300
   let debug = false
   let compensateWidth = true
+  let fontSize = 50;
+
+  onMount(() => {
+    if (window.innerWidth > 600) {
+      fontSize = 74;
+    }
+  })
 
   afterUpdate(() => {
     controls = {
@@ -25,7 +32,8 @@
         y: radiusY
       },
       debug,
-      compensateWidth
+      compensateWidth,
+      fontSize
     }
   })
 </script>
@@ -57,12 +65,16 @@
 
     <p>
       <span class="control radius">
-        <label for="radius-control">Radius horizontal:</label>
-        <input class="radius-control" type="range" name="radius-control" id="radius-control" min="50" max="1000" step="1" bind:value={radiusX}>
+        <label for="radius-control-x">Radius horizontal:</label>
+        <input class="radius-control-x" type="range" name="radius-control-x" id="radius-control-x" min="50" max="1000" step="1" bind:value={radiusX}>
       </span>
       <span class="control radius">
-        <label for="radius-control">Radius vertical:</label>
-        <input class="radius-control" type="range" name="radius-control" id="radius-control" min="50" max="1000" step="1" bind:value={radiusY}>
+        <label for="radius-control-y">Radius vertical:</label>
+        <input class="radius-control-y" type="range" name="radius-control-y" id="radius-control-y" min="50" max="1000" step="1" bind:value={radiusY}>
+      </span>
+      <span class="control size">
+        <label for="size-control">Font size:</label>
+        <input class="size-control" type="range" name="size-control" id="size-control" min="20" max="200" step="1" bind:value={fontSize}>
       </span>
     </p>
   </div>
@@ -113,11 +125,5 @@
       grid-template-columns: 1fr 1fr;
       grid-gap: 0.5rem;
     }
-  }
-
-  @media screen and (min-width: 980px) {
-    /* .bulge label {
-      min-width: none;
-    } */
   }
 </style>

@@ -17,7 +17,7 @@
 </header>
 
 <main>
-  <TextArea bind:textBox={textBox} />
+  <TextArea bind:controls={controls} bind:textBox={textBox} />
   <Controls bind:controls={controls} bind:textBox={textBox} />
 </main>
 
