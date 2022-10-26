@@ -31,6 +31,8 @@
   onMount(() => setTimeout(() => onChangeText(reference), 50))
 </script>
 
+<svelte:window on:resize={() => onChangeText(reference)} />
+
 <div class="column">
   <div>
     <h2>Source text</h2>
