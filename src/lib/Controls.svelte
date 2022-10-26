@@ -4,6 +4,7 @@
   import Canvas from './Canvas.svelte';
   export let controls: ControlsType;
   export let textBox: TextBoxType;
+  const fontSizeVw = () => window && window.innerWidth && window.innerWidth > 600 ? window.innerWidth / 100 * 8 : 60;
 
   let thickness = 1
   let bulgeX = true
@@ -12,13 +13,9 @@
   let radiusY = 300
   let debug = false
   let compensateWidth = true
-  let fontSize = 50;
+  let fontSize = fontSizeVw();
 
-  onMount(() => {
-    if (window.innerWidth > 600) {
-      fontSize = 74;
-    }
-  })
+  onMount(() => fontSize = fontSizeVw())
 
   afterUpdate(() => {
     controls = {
@@ -36,7 +33,11 @@
       fontSize
     }
   })
+
+  const onResize = () => fontSize = fontSizeVw()
 </script>
+
+<svelte:window on:resize={onResize} />
 
 <div class="column">
   <div>
